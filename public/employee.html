@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Colorado — Сотрудник</title>
+  <link rel="stylesheet" href="./style.css"/>
+  <script defer src="./app.js"></script>
+</head>
+<body data-page="employee">
+  <header class="topbar">
+    <div class="brand">Colorado</div>
+    <a id="logoutLink" class="toplink" href="#">Выйти</a>
+  </header>
+
+  <main class="shell">
+    <section class="panel panel-md">
+      <h1 class="h1">Панель сотрудника</h1>
+      <p class="muted">Сотрудник: <b id="empName">—</b></p>
+      <div class="divider"></div>
+
+      <div id="startView">
+        <p id="endedAtRow" class="muted" hidden>Окончание последней смены: <b id="endedAt">—:—</b></p>
+        <div class="actions-row">
+          <button id="startShiftBtn" class="btn" type="button">Начать смену</button>
+        </div>
+
+        <div style="margin-top:16px">
+          <h3 class="h1" style="font-size:18px;margin:0 0 8px">История смен</h3>
+          <div id="historyList" class="list-v"></div>
+          <p id="historyEmpty" class="muted">Истории пока нет.</p>
+        </div>
+      </div>
+
+      <div id="shiftView" hidden>
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;">
+          <p class="muted" style="margin:0">Начало первой сессии: <b id="startedAt">—:—</b></p>
+          <div class="actions-row">
+            <button id="stopShiftBtn" class="btn" type="button">Закончить смену</button>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <h2 class="h1" style="font-size:20px;margin-top:0">Задания</h2>
+        <p id="tasksEmpty" class="muted">Заданий нет.</p>
+        <div id="taskList" class="list-v"></div>
+
+        <form id="taskAddForm" class="form-grid" style="margin-top:12px" novalidate>
+          <div class="field">
+            <label class="lbl" for="taskText">Добавить задание</label>
+            <input id="taskText" class="inp" type="text" minlength="2" placeholder="Опишите задание" required/>
+          </div>
+          <div class="actions-row">
+            <button class="btn" type="submit">Добавить</button>
+          </div>
+        </form>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

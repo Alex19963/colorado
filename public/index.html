@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Colorado — Вход</title>
+  <link rel="stylesheet" href="./style.css"/>
+  <script defer src="./app.js"></script>
+</head>
+<body class="app" data-page="index">
+  <header class="topbar">
+    <div class="brand">colorado</div>
+    <a class="toplink" href="admin-login.html">Администратор</a>
+  </header>
+
+  <main class="container">
+    <div class="card" role="region" aria-labelledby="h1">
+      <h1 id="h1" class="h1">Вход сотрудника</h1>
+      <form id="empLoginForm" class="form-grid" novalidate>
+        <div class="field">
+          <label class="lbl" for="empPass">Пароль</label>
+          <input class="inp" id="empPass" type="password" placeholder="Пароль" minlength="4" autocomplete="off" autofocus required/>
+        </div>
+        <p id="empErr" class="error" hidden></p>
+        <div class="actions-row">
+          <button class="btn btn-primary" type="submit">Войти</button>
+        </div>
+      </form>
+    </div>
+  </main>
+</body>
+</html>

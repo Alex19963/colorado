@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Colorado — Администратор</title>
+  <link rel="stylesheet" href="./style.css"/>
+  <script defer src="./app.js"></script>
+</head>
+<body data-page="admin">
+  <header class="topbar">
+    <div class="brand">Colorado</div>
+    <a id="adminLogout" class="toplink" href="#">Выйти</a>
+  </header>
+
+  <main class="shell">
+    <section class="panel panel-lg">
+      <h1 class="h1">Панель администратора</h1>
+      <p class="muted" style="margin:4px 0 16px">Админ: <b id="adminName">—</b></p>
+
+      <div id="adminTabs" class="tabs">
+        <button class="tab" data-tab="emp" aria-current="true">Сотрудники</button>
+        <button class="tab" data-tab="task">Задания</button>
+        <button class="tab" data-tab="rep">Отчёт</button>
+        <button class="tab" data-tab="fire">Увольнение</button>
+        <button class="tab" data-tab="acc">Учётная запись</button>
+      </div>
+
+      <div class="divider"></div>
+
+      <!-- Сотрудники -->
+      <section id="tab-emp" data-tab-panel>
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:8px">
+          <h2 class="h1" style="font-size:20px;margin:0">Сотрудники</h2>
+          <button id="empAddToggle" class="btn" type="button">Новый сотрудник</button>
+        </div>
+
+        <form id="empAddForm" class="form-grid panel panel-sm" style="margin-top:10px" hidden novalidate>
+          <div class="field">
+            <label class="lbl" for="empFirst">Имя</label>
+            <input id="empFirst" class="inp" type="text" minlength="2" required/>
+          </div>
+          <div class="field">
+            <label class="lbl" for="empLast">Фамилия</label>
+            <input id="empLast" class="inp" type="text" minlength="2" required/>
+          </div>
+          <div class="field">
+            <label class="lbl" for="empPassNew">Пароль (мин. 4)</label>
+            <input id="empPassNew" class="inp" type="text" minlength="4" required/>
+          </div>
+          <p id="empAddErr" class="error" hidden></p>
+          <div class="actions-row">
+            <button class="btn" type="submit">Добавить</button>
+            <button id="empAddCancel" class="btn btn-danger" type="button">Отмена</button>
+          </div>
+        </form>
+
+        <div id="empList" class="list-v" style="margin-top:12px"></div>
+        <p id="empEmpty" class="muted">Пока нет сотрудников.</p>
+      </section>
+
+      <!-- Задания -->
+      <section id="tab-task" data-tab-panel hidden>
+        <h2 class="h1" style="font-size:20px;margin-top:0">Выдать задания</h2>
+        <form id="bulkTaskForm" class="form-grid" novalidate>
+          <div class="field">
+            <label class="lbl" for="bulkTaskText">Текст задания</label>
+            <input id="bulkTaskText" class="inp" type="text" minlength="2" required/>
+          </div>
+          <p class="lbl">Кому выдать</p>
+          <div id="bulkTaskList"></div>
+          <p id="bulkTaskErr" class="error" hidden></p>
+          <div class="actions-row">
+            <button class="btn" type="submit">Выдать выбранным</button>
+          </div>
+          <p class="muted">Запишется в «сегодня» у выбранных.</p>
+        </form>
+
+        <div class="divider"></div>
+        <h3 class="h1" style="font-size:18px;margin:8px 0">Сегодняшние задания</h3>
+        <div id="bulkPreview" class="list-v"></div>
+        <p id="bulkPreviewEmpty" class="muted">Ещё нет заданий на сегодня.</p>
+      </section>
+
+      <!-- Отчёт -->
+      <section id="tab-rep" data-tab-panel hidden>
+        <h2 class="h1" style="font-size:20px;margin-top:0">Отчёт</h2>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+          <label class="lbl">Сотрудник</label>
+          <select id="repEmp" class="inp" style="max-width:260px"></select>
+          <label class="lbl">Месяц</label>
+          <input id="repMonth" class="inp" type="month" style="max-width:180px"/>
+          <button id="repPrintBtn" class="btn" type="button">Печать</button>
+        </div>
+
+        <div id="repSummary" style="margin-top:12px;display:flex;gap:12px;flex-wrap:wrap">
+          <div class="card-box"><div class="muted">Дней</div><div id="repDays" style="font-weight:600">0</div></div>
+          <div class="card-box"><div class="muted">Часы</div><div id="repHours" style="font-weight:600">0:00</div></div>
+          <div class="card-box"><div class="muted">Выполнено</div><div><b id="repDone">0</b>/<span id="repTotal">0</span></div></div>
+        </div>
+
+        <div id="repList" class="list-v" style="margin-top:12px"></div>
+        <p id="repEmpty" class="muted">Нет смен в выбранном месяце.</p>
+      </section>
+
+      <!-- Увольнение -->
+      <section id="tab-fire" data-tab-panel hidden>
+        <h2 class="h1" style="font-size:20px;margin-top:0">Увольнение сотрудника</h2>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+          <select id="fireEmp" class="inp" style="max-width:260px"></select>
+          <button id="fireBtn" class="btn btn-danger" type="button">Удалить все данные</button>
+        </div>
+        <p class="muted">Будут удалены профиль, активная смена, история и задания.</p>
+      </section>
+
+      <!-- Учётная запись -->
+      <section id="tab-acc" data-tab-panel hidden>
+        <h2 class="h1" style="font-size:20px;margin-top:0">Учётная запись администратора</h2>
+        <form id="adminCredsForm" class="form-grid" novalidate>
+          <div class="field">
+            <label class="lbl" for="adminUserCurrent">Текущий логин</label>
+            <input id="adminUserCurrent" class="inp" type="text" disabled/>
+          </div>
+          <div class="field">
+            <label class="lbl" for="adminUserNew">Новый логин</label>
+            <input id="adminUserNew" class="inp" type="text" minlength="3" required/>
+          </div>
+          <div class="field">
+            <label class="lbl" for="adminPassNew">Новый пароль</label>
+            <input id="adminPassNew" class="inp" type="password" minlength="4" required/>
+          </div>
+          <div class="field">
+            <label class="lbl" for="adminPassNew2">Подтверждение пароля</label>
+            <input id="adminPassNew2" class="inp" type="password" minlength="4" required/>
+          </div>
+          <p id="adminCredsErr" class="error" hidden></p>
+          <div class="actions-row">
+            <button class="btn" type="submit">Сохранить</button>
+          </div>
+        </form>
+      </section>
+    </section>
+  </main>
+</body>
+</html>
