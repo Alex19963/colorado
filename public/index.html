@@ -6,6 +6,16 @@
   <title>Colorado — Вход</title>
   <link rel="stylesheet" href="./style.css"/>
   <script defer src="./app.js"></script>
+  <link rel="manifest" href="/manifest.json">
+<link rel="icon" href="/icon-192.png">
+<meta name="theme-color" content="#0e0f12">
+
+<script>
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("/sw.js");
+  }
+</script>
+
 </head>
 <body class="app" data-page="index">
   <header class="topbar">
